@@ -9,8 +9,41 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var inputNumber = ""
+    @State private var inputUnit = ""
+    @State private var outputUnit = ""
+    
+    var conversion: String {
+        return ""
+    }
+    
+    let units = [UnitLength.meters, UnitLength.kilometers, UnitLength.feet, UnitLength.yards, UnitLength.miles]
+    
     var body: some View {
-        Text("Hello, World!")
+        NavigationView {
+            Form {
+                Section(header: Text("Units to convert from")) {
+                    Picker("Units", selection: $inputUnit) {
+                        ForEach(0..<units.count) {
+                            Text("\(self.units[$0].symbol)")
+                        }
+                    }.pickerStyle(SegmentedPickerStyle())
+                    
+                    TextField("Units", text: $inputNumber)
+                }
+
+                Section(header: Text("Units to convert to")) {
+                    Picker("Units", selection: $outputUnit) {
+                        ForEach(0..<units.count) {
+                            Text("\(self.units[$0].symbol)")
+                        }
+                    }.pickerStyle(SegmentedPickerStyle())
+                    
+                    Text(conversion)
+                }
+            }.navigationBarTitle("Converter")
+        }
     }
 }
 
