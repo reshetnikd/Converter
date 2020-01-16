@@ -11,11 +11,12 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var inputNumber = ""
-    @State private var inputUnit = ""
-    @State private var outputUnit = ""
+    @State private var inputUnit = 2
+    @State private var outputUnit = 2
     
     var conversion: String {
-        return ""
+        let measure = Measurement(value: Double(inputNumber) ?? 0, unit: units[inputUnit])
+        return String(measure.converted(to: units[outputUnit]).value)
     }
     
     let units = [UnitLength.meters, UnitLength.kilometers, UnitLength.feet, UnitLength.yards, UnitLength.miles]
@@ -30,7 +31,7 @@ struct ContentView: View {
                         }
                     }.pickerStyle(SegmentedPickerStyle())
                     
-                    TextField("Units", text: $inputNumber)
+                    TextField("Units", text: $inputNumber).keyboardType(.decimalPad)
                 }
 
                 Section(header: Text("Units to convert to")) {
